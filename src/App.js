@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import {loadTheme, Pivot, PivotItem, DefaultButton, Panel,
-        PanelType} from '@fluentui/react';
+        PanelType, DefaultEffects} from '@fluentui/react';
 import {useBoolean} from '@uifabric/react-hooks';
 
 function App() {
@@ -40,7 +40,7 @@ function Vis1() {
 
 function Vis1Display() {
   return(
-    <div className='visDisplay'>
+    <div className='visDisplay' style={{boxShadow: DefaultEffects.elevation4}}>
       <p>First vis will be displayed here</p>
     </div>
   );
@@ -66,7 +66,7 @@ function Vis2() {
 
 function Vis2Display() {
   return(
-    <div className='visDisplay'>
+    <div className='visDisplay' style={{boxShadow: DefaultEffects.elevation4}}>
       <p>Second vis will be displayed here</p>
     </div>
   );
@@ -92,7 +92,7 @@ function Vis3() {
 
 function Vis3Display() {
   return(
-    <div className='visDisplay'>
+    <div className='visDisplay' style={{boxShadow: DefaultEffects.elevation4}}>
       <p>Third vis will be displayed here</p>
     </div>
   );
@@ -109,7 +109,7 @@ function Vis3Options() {
 
 function InfoPort() {
   return (
-    <Pivot className='info'>
+    <Pivot className='info' style={{boxShadow: DefaultEffects.elevation8}}>
       <PivotItem headerText='Stucture'>
         <Structure/>
       </PivotItem>
