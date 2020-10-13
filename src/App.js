@@ -7,6 +7,7 @@ import FileManagement from './FileManagement.js';
 import Vis1 from './Vis1.js';
 import Vis2 from './Vis2.js';
 import Vis3 from './Vis3.js';
+import LoadSampleData from './LoadSampleData.js';
 
 function App() {
   return (
