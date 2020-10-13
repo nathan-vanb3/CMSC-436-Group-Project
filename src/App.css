@@ -2,7 +2,7 @@
 .masterContainer {
   display: grid;
   grid-template-columns: 74vw 25vw;
-  column-gap: 10px;
+  column-gap: 0.7vw;
   place-content: stretch stretch;
 }
 
@@ -13,7 +13,7 @@
 .visPort {
   display:grid;
   grid-template-rows: 73vh 20vh;
-  row-gap: 10px;
+  row-gap: 1vh;
   place-content: stretch stretch;
 }
 
