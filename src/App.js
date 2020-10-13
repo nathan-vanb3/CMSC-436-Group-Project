@@ -3,8 +3,10 @@ import './App.css';
 import {loadTheme, Pivot, PivotItem, DefaultButton, Panel,
         PanelType, DefaultEffects} from '@fluentui/react';
 import {useBoolean} from '@uifabric/react-hooks';
-
-
+import FileManagement from './FileManagement.js';
+import Vis1 from './Vis1.js';
+import Vis2 from './Vis2.js';
+import Vis3 from './Vis3.js';
 
 function App() {
   return (
@@ -28,84 +30,6 @@ function VisPort() {
         <Vis3/>
       </PivotItem>
     </Pivot>
-  );
-}
-
-function Vis1() {
-  return(
-    <div className='visPort'>
-      <Vis1Display/>
-      <Vis1Options/>
-    </div>
-  );
-}
-
-function Vis1Display() {
-  return(
-    <div className='visDisplay' style={{boxShadow: DefaultEffects.elevation4}}>
-      <p>First vis will be displayed here</p>
-    </div>
-  );
-}
-
-function Vis1Options() {
-  return(
-    <div className='visOptions' style={{boxShadow: DefaultEffects.elevation8}}>
-      <p>First vis options</p>
-      <FileManagement/>
-    </div>
-  );
-}
-
-function Vis2() {
-  return(
-    <div className='visPort'>
-      <Vis2Display/>
-      <Vis2Options/>
-    </div>
-  );
-}
-
-function Vis2Display() {
-  return(
-    <div className='visDisplay' style={{boxShadow: DefaultEffects.elevation4}}>
-      <p>Second vis will be displayed here</p>
-    </div>
-  );
-}
-
-function Vis2Options() {
-  return(
-    <div className='visOptions'>
-      <p>Second vis options</p>
-      <FileManagement/>
-    </div>
-  );
-}
-
-function Vis3() {
-  return(
-    <div className='visPort'>
-      <Vis3Display/>
-      <Vis3Options/>
-    </div>
-  );
-}
-
-function Vis3Display() {
-  return(
-    <div className='visDisplay' style={{boxShadow: DefaultEffects.elevation4}}>
-      <p>Third vis will be displayed here</p>
-    </div>
-  );
-}
-
-function Vis3Options() {
-  return(
-    <div className='visOptions'>
-      <p>Third vis options</p>
-      <FileManagement/>
-    </div>
   );
 }
 
@@ -148,20 +72,5 @@ function Additional() {
     </div>
   );
 }
-
-function FileManagement() {
-  const [isOpen, {setTrue: openPanel, setFalse: dismissPanel}] = useBoolean(false);
-
-  return(
-    <div>
-      <DefaultButton text='Manage Files' onClick={openPanel}/>
-      <Panel isLightDismiss isOpen={isOpen} type={PanelType.medium} headerText="File Management" onDismiss={dismissPanel}>
-        <p>File info and options go here</p>
-        <DefaultButton text="Add File"/>
-      </Panel>
-    </div>
-  );
-}
-
 
 export default App;
