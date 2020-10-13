@@ -4,6 +4,8 @@ import {loadTheme, Pivot, PivotItem, DefaultButton, Panel,
         PanelType, DefaultEffects} from '@fluentui/react';
 import {useBoolean} from '@uifabric/react-hooks';
 
+
+
 function App() {
   return (
     <div className='masterContainer'>
@@ -48,7 +50,7 @@ function Vis1Display() {
 
 function Vis1Options() {
   return(
-    <div className='visOptions'>
+    <div className='visOptions' style={{boxShadow: DefaultEffects.elevation8}}>
       <p>First vis options</p>
       <FileManagement/>
     </div>
@@ -109,7 +111,7 @@ function Vis3Options() {
 
 function InfoPort() {
   return (
-    <Pivot className='info' style={{boxShadow: DefaultEffects.elevation8}}>
+    <Pivot className='info'>
       <PivotItem headerText='Stucture'>
         <Structure/>
       </PivotItem>
@@ -125,19 +127,25 @@ function InfoPort() {
 
 function Structure() {
   return(
-    <p>Structure will go here</p>
+    <div className='infoItem' style={{boxShadow: DefaultEffects.elevation4}}>
+      <p>Structure will go here</p>
+    </div>
   );
 }
 
 function Properties() {
   return(
-    <p>Properties will go here</p>
+    <div style={{boxShadow: DefaultEffects.elevation4}}>
+      <p>Properties will go here</p>
+    </div>
   );
 }
 
 function Additional() {
   return(
-    <p>Additional info will go here</p>
+    <div style={{boxShadow: DefaultEffects.elevation4}}>
+      <p>Additional info will go here</p>
+    </div>
   );
 }
 
