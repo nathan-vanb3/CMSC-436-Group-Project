@@ -7,7 +7,6 @@ import FileManagement from './FileManagement.js';
 import Vis1 from './Vis1.js';
 import Vis2 from './Vis2.js';
 import Vis3 from './Vis3.js';
-import LoadSampleData from './LoadSampleData.js';
 
 function App() {
   return (
@@ -60,7 +59,7 @@ function Structure() {
 
 function Properties() {
   return(
-    <div style={{boxShadow: DefaultEffects.elevation4}}>
+    <div className='infoItem' style={{boxShadow: DefaultEffects.elevation4}}>
       <p>Properties will go here</p>
     </div>
   );
@@ -68,7 +67,7 @@ function Properties() {
 
 function Additional() {
   return(
-    <div style={{boxShadow: DefaultEffects.elevation4}}>
+    <div className='infoItem' style={{boxShadow: DefaultEffects.elevation4}}>
       <p>Additional info will go here</p>
     </div>
   );
