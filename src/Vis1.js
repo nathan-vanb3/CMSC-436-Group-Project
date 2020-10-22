@@ -68,8 +68,18 @@ class Visualization extends Component {
 
     const svg = d3.select(this.node)
         .attr("viewBox", `${-padding} 0 ${width} ${width}`)
-        .style("width", "75vw")
-        .style("height", "75vh");
+        .style('position', 'relative')
+        .style("width", "100%")
+        .style("height", "100%")
+        .call(d3.zoom().on('zoom', function(event, d) {
+          svg.attr('transform', event.transform)
+        }))
+        .append('g');
+
+    var div = d3.select('body')
+        .append('div')
+        .attr('class','tooltip')
+        .style('opacity', 0);
   
     svg.append("g")
         .call(xAxis);
@@ -96,7 +106,20 @@ class Visualization extends Component {
         .data(data.filter(d => !isNaN(d[columns[i]]) && !isNaN(d[columns[j]])))
         .join("circle")
           .attr("cx", d => x[i](d[columns[i]]))
-          .attr("cy", d => y[j](d[columns[j]]));
+          .attr("cy", d => y[j](d[columns[j]]))
+          .on("mouseover", function(event, d) {		
+            div.transition()		
+                .duration(200)		
+                .style("opacity", .9);		
+            div.html("ID: " + d.ID + "<br/>" + "SMILES: " + d.SMILES + "<br/>" + "mib_vol: " + d.mib_vol + "<br/>" + "LogP_Jchem: " + d.LogP_Jchem)
+                .style("left", (event.pageX) + "px")		
+                .style("top", (event.pageY - 28) + "px");	
+            })					
+          .on("mouseout", function(d) {		
+              div.transition()		
+                  .duration(500)		
+                  .style("opacity", 0);	
+          });
     });
   
     const circle = cell.selectAll("circle")
