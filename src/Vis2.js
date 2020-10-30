@@ -1,29 +1,16 @@
 import React from 'react';
 import FileManagement from './FileManagement.js';
-import {DefaultEffects} from '@fluentui/react';
+import {DefaultEffects, ScrollablePane} from '@fluentui/react';
+import ReactFlexyTable from 'react-flexy-table';
+import data from './data.json';
+import 'react-flexy-table/dist/index.css';
 
 function Vis2() {
   return(
     <div className='visPort'>
-      <Vis2Display/>
-      <Vis2Options/>
-    </div>
-  );
-}
-
-function Vis2Display() {
-  return(
-    <div className='visDisplay' style={{boxShadow: DefaultEffects.elevation4}}>
-      <p>Second vis will be displayed here</p>
-    </div>
-  );
-}
-
-function Vis2Options() {
-  return(
-    <div className='visOptions'>
-      <p>update Second vis options</p>
-      <FileManagement/>
+      <ScrollablePane style={{boxShadow: DefaultEffects.elevation4}}>
+        <ReactFlexyTable data={data} pageSizeOptions={[5, 10, 15, 20, 50, 100, 200, 500, 1000]} sortable filterable globalSearch/>
+      </ScrollablePane>
     </div>
   );
 }

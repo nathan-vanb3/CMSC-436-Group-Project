@@ -15,6 +15,7 @@
   grid-template-rows: 73vh 20vh;
   row-gap: 1vh;
   place-content: stretch stretch;
+  position: relative;
 }
 
 .visDisplay {
