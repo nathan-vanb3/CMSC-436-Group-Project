@@ -20,13 +20,13 @@ function App() {
 function VisPort() {
   return (
     <Pivot className='vis'>
-      <PivotItem headerText='Vis 1'>
+      <PivotItem headerText='SPLOM'>
         <Vis1/>
       </PivotItem>
-      <PivotItem headerText='Vis 2'>
+      <PivotItem headerText='Table'>
         <Vis2/>
       </PivotItem>
-      <PivotItem headerText='Vis 3'>
+      <PivotItem headerText='Clustering'>
         <Vis3/>
       </PivotItem>
     </Pivot>

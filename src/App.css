@@ -48,3 +48,8 @@ div.tooltip {
   pointer-events: none;			
 }
 
+.selected {
+  fill: red;
+  r: 5.0;
+}
+

@@ -106,19 +106,32 @@ class Visualization extends Component {
         .data(data.filter(d => !isNaN(d[columns[i]]) && !isNaN(d[columns[j]])))
         .join("circle")
           .attr("cx", d => x[i](d[columns[i]]))
-          .attr("cy", d => y[j](d[columns[j]]))
-          .on("mouseover", function(event, d) {		
-            div.transition()		
-                .duration(200)		
-                .style("opacity", .9);		
-            div.html("ID: " + d.ID + "<br/>" + "SMILES: " + d.SMILES + "<br/>" + "mib_vol: " + d.mib_vol + "<br/>" + "LogP_Jchem: " + d.LogP_Jchem)
-                .style("left", (event.pageX) + "px")		
-                .style("top", (event.pageY - 28) + "px");	
-            })					
+          .attr("cy", d => y[j](d[columns[j]]))					
           .on("mouseout", function(d) {		
-              div.transition()		
-                  .duration(500)		
-                  .style("opacity", 0);	
+            div.transition()		
+                .duration(500)		
+                .style("opacity", 0);	
+          })
+          .on('click', function(event, d) {
+            var currentData = d;
+
+            div.transition()
+              .duration(200)		
+              .style("opacity", .9);		
+
+            div.html("ID: " + d.ID + "<br/>" + "SMILES: " + d.SMILES + "<br/>" + "mib_vol: " + d.mib_vol + "<br/>" + "LogP_Jchem: " + d.LogP_Jchem)
+              .style("left", (event.pageX) + "px")		
+              .style("top", (event.pageY - 28) + "px");
+
+            d3.selectAll('circle').each(function(d) {
+              if(currentData === d) {
+                d3.select(this).classed('selected', true).raise();
+              }
+
+              else {
+                d3.select(this).classed('selected', false);
+              }
+            })
           });
     });
   
