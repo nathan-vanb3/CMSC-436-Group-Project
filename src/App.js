@@ -8,66 +8,137 @@ import Vis1 from './Vis1.js';
 import Vis2 from './Vis2.js';
 import Vis3 from './Vis3.js';
 
-function App() {
-  return (
-    <div className='masterContainer'>
-      <VisPort/>
-      <InfoPort/>
-    </div>
-  );
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      selectedProperties: '',
+      showInfoPort: false,
+    };
+
+    this.updateSelected = this.updateSelected.bind(this);
+    this.toggleInfoPort = this.toggleInfoPort.bind(this);
+  };
+
+  updateSelected(info) {
+    var newElement = (
+      <div>
+        <p>ID: {info['ID']}</p>
+        <br/>
+        <p>SMILES: {info['SMILES']}</p>
+        <br/>
+        <p>mib_vol: {info['mib_vol']}</p>
+        <br/>
+        <p>LogP_Jchem: {info['LogP_Jchem']}</p>
+        <br/>
+        <p>pKa_uncap: {info['pKa_uncap']}</p>
+      </div>
+    );
+
+    console.log('updating');
+
+    this.setState(
+      {
+        selectedProperties: newElement,
+      }
+    );
+  };
+
+  toggleInfoPort() {
+    this.state.showInfoPort ? this.setState({showInfoPort: false}) : this.setState({showInfoPort: true});
+  }
+
+  render() {
+    return (
+      <div className='masterContainer'>
+        <VisPort updateSelected={this.updateSelected} fill={!this.state.showInfoPort} toggleInfoPort={this.toggleInfoPort}/>
+
+        {this.state.showInfoPort 
+          ? <InfoPort properties={this.state.selectedProperties}/>
+          : null
+        }
+        
+      </div>
+    );
+  };
 }
 
-function VisPort() {
-  return (
-    <Pivot className='vis'>
-      <PivotItem headerText='SPLOM'>
-        <Vis1/>
-      </PivotItem>
-      <PivotItem headerText='Table'>
-        <Vis2/>
-      </PivotItem>
-      <PivotItem headerText='Clustering'>
-        <Vis3/>
-      </PivotItem>
-    </Pivot>
-  );
-}
+class VisPort extends React.Component {
+  constructor(props) {
+    super(props);
 
-function InfoPort() {
-  return (
-    <Pivot className='info'>
-      <PivotItem headerText='Stucture'>
-        <Structure/>
-      </PivotItem>
-      <PivotItem headerText='Properties'>
-        <Properties/>
-      </PivotItem>
-      <PivotItem headerText='Additional'>
-        <Additional/>
-      </PivotItem>
-    </Pivot>
-  );
-}
+    this.state = {fill: true};
+  };
+
+  render() {
+    console.log(this.state.fill);
+
+    return (
+      <Pivot className={this.state.fill ? 'visFill' : 'vis'} onLinkClick={(item) => {
+        if(item.key === '.0') {
+          this.setState({fill: true});
+          this.props.toggleInfoPort();
+        }
+
+        else {
+          this.setState({fill: false});
+          this.props.toggleInfoPort();
+        }
+      }}>
+        <PivotItem headerText='Table'>
+          <Vis2/>
+        </PivotItem>
+        <PivotItem headerText='SPLOM'>
+          <Vis1 updateSelected={this.props.updateSelected}/>
+        </PivotItem>
+        <PivotItem headerText='Clustering'>
+          <Vis3/>
+        </PivotItem>
+      </Pivot>
+    );
+  };
+};
+
+class InfoPort extends React.Component {
+  render() {
+    return (
+      <Pivot className='info'>
+        <PivotItem headerText='Properties'>
+          <Properties info={this.props.properties}/>
+        </PivotItem>
+        <PivotItem headerText='Stucture'>
+          <Structure/>
+        </PivotItem>
+        <PivotItem headerText='Additional'>
+          <Additional/>
+        </PivotItem>
+      </Pivot>
+    );
+  };
+};
 
 function Structure() {
   return(
-    <div className='infoItem' style={{boxShadow: DefaultEffects.elevation4}}>
+    <div id='structure' className='infoItem' style={{boxShadow: DefaultEffects.elevation4}}>
       <p>Structure will go here</p>
     </div>
   );
 }
 
-function Properties() {
-  return(
-    <div className='infoItem' style={{boxShadow: DefaultEffects.elevation4}}>
-      <p>Properties will go here</p>
-    </div>
-  );
+class Properties extends React.Component {
+  render() {
+    return(
+      <div id='properties' className='infoItem' style={{boxShadow: DefaultEffects.elevation4}}>
+        {this.props.info}
+      </div>
+    );
+  };
 }
 
 function Additional() {
   return(
-    <div className='infoItem' style={{boxShadow: DefaultEffects.elevation4}}>
+    <div id='additional' className='infoItem' style={{boxShadow: DefaultEffects.elevation4}}>
       <p>Additional info will go here</p>
     </div>
   );

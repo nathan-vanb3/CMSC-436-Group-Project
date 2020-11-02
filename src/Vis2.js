@@ -9,7 +9,7 @@ function Vis2() {
   return(
     <div className='visPort'>
       <ScrollablePane style={{boxShadow: DefaultEffects.elevation4}}>
-        <ReactFlexyTable data={data} pageSizeOptions={[5, 10, 15, 20, 50, 100, 200, 500, 1000]} sortable filterable globalSearch/>
+        <ReactFlexyTable data={data} pageSize={10} pageSizeOptions={[10, 15, 20, 50, 100, 200, 500, 1000]} sortable filterable globalSearch/>
       </ScrollablePane>
     </div>
   );

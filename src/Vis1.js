@@ -6,31 +6,32 @@ var d3 = require('d3');
 
 var fixed_data = Object.assign(data, {x: 'mib_vol', y: 'LogP_Jchem'})
 
-function Vis1() {
-  return(
-    <div className='visPort'>
-      <div className='visDisplay' style={{boxShadow: DefaultEffects.elevation4}}>
-        <Visualization data={fixed_data} size={[1000,800]} />
+class Vis1 extends Component {
+  render() {
+    return(
+      <div className='visPort'>
+        <div className='visDisplay' style={{boxShadow: DefaultEffects.elevation4}}>
+          <Visualization data={fixed_data} size={[1000,800]} updateSelected={this.props.updateSelected}/>
+        </div>
+        <Vis1Options/>
       </div>
-      <Vis1Options/>
-    </div>
-  );
-}
+    );
+  };
+};
 
 class Visualization extends Component {
   constructor(props){
-    super(props)
-      this.createVisualization = this.createVisualization.bind(this)
+    super(props);
+
+    this.createVisualization = this.createVisualization.bind(this);
   }
+
   componentDidMount() {
       this.createVisualization()
   }
 
-  componentDidUpdate() {
-      this.createVisualization()
-  }
-
   createVisualization() {
+    var componentContext = this;
     var padding = 20
     var columns = ['mib_vol', 'LogP_Jchem', 'pKa_uncap']
     var width = 1000
@@ -100,7 +101,7 @@ class Visualization extends Component {
         .attr("y", padding / 2 + 0.5)
         .attr("width", size - padding)
         .attr("height", size - padding);
-  
+
     cell.each(function([i, j]) {
       d3.select(this).selectAll("circle")
         .data(data.filter(d => !isNaN(d[columns[i]]) && !isNaN(d[columns[j]])))
@@ -115,14 +116,6 @@ class Visualization extends Component {
           .on('click', function(event, d) {
             var currentData = d;
 
-            div.transition()
-              .duration(200)		
-              .style("opacity", .9);		
-
-            div.html("ID: " + d.ID + "<br/>" + "SMILES: " + d.SMILES + "<br/>" + "mib_vol: " + d.mib_vol + "<br/>" + "LogP_Jchem: " + d.LogP_Jchem)
-              .style("left", (event.pageX) + "px")		
-              .style("top", (event.pageY - 28) + "px");
-
             d3.selectAll('circle').each(function(d) {
               if(currentData === d) {
                 d3.select(this).classed('selected', true).raise();
@@ -131,7 +124,9 @@ class Visualization extends Component {
               else {
                 d3.select(this).classed('selected', false);
               }
-            })
+            });
+
+            componentContext.props.updateSelected(d);
           });
     });
   
