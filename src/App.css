@@ -57,3 +57,7 @@ div.tooltip {
   r: 5.0;
 }
 
+.structureViewer {
+  height: 100%;
+  width: 100%;
+}

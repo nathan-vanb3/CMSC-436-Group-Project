@@ -15,6 +15,8 @@ class App extends React.Component {
     this.state = {
       selectedProperties: '',
       showInfoPort: false,
+      selected: false,
+      selectedElement: null
     };
 
     this.updateSelected = this.updateSelected.bind(this);
@@ -40,7 +42,9 @@ class App extends React.Component {
 
     this.setState(
       {
-        selectedProperties: newElement,
+        selectedProperties: info,
+        selected: true,
+        selectedElement: newElement
       }
     );
   };
@@ -55,7 +59,7 @@ class App extends React.Component {
         <VisPort updateSelected={this.updateSelected} fill={!this.state.showInfoPort} toggleInfoPort={this.toggleInfoPort}/>
 
         {this.state.showInfoPort 
-          ? <InfoPort properties={this.state.selectedProperties}/>
+          ? <InfoPort properties={this.state.selectedProperties} selectedElement={this.state.selectedElement} selected={this.state.selected}/>
           : null
         }
         
@@ -105,10 +109,10 @@ class InfoPort extends React.Component {
     return (
       <Pivot className='info'>
         <PivotItem headerText='Properties'>
-          <Properties info={this.props.properties}/>
+          <Properties selected={this.props.selected} info={this.props.selectedElement}/>
         </PivotItem>
         <PivotItem headerText='Stucture'>
-          <Structure/>
+          <Structure selected={this.props.selected} info={this.props.properties}/>
         </PivotItem>
         <PivotItem headerText='Additional'>
           <Additional/>
@@ -118,19 +122,29 @@ class InfoPort extends React.Component {
   };
 };
 
-function Structure() {
-  return(
-    <div id='structure' className='infoItem' style={{boxShadow: DefaultEffects.elevation4}}>
-      <p>Structure will go here</p>
-    </div>
-  );
+class Structure extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      image: null
+    }
+  }
+
+  render() {
+    return(
+      <div id='structure' className='infoItem' style={{boxShadow: DefaultEffects.elevation4}}>
+        {this.props.selected ? <iframe className='structureViewer' src={'https://embed.molview.org/v1/?mode=balls&smiles=' + this.props.info['SMILES']}></iframe> : <p>No Species Selected.</p>}
+      </div>
+    );
+  }
 }
 
 class Properties extends React.Component {
   render() {
     return(
       <div id='properties' className='infoItem' style={{boxShadow: DefaultEffects.elevation4}}>
-        {this.props.info}
+        {this.props.selected ? this.props.info : <p>No Species Selected.</p>}
       </div>
     );
   };

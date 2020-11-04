@@ -23,11 +23,15 @@ class Visualization extends Component {
   constructor(props){
     super(props);
 
+    this.state = {
+      loading: true,
+    }
+
     this.createVisualization = this.createVisualization.bind(this);
   }
 
   componentDidMount() {
-      this.createVisualization()
+      this.createVisualization();
   }
 
   createVisualization() {
@@ -145,11 +149,12 @@ class Visualization extends Component {
         .attr("y", padding)
         .attr("dy", ".71em")
         .text(d => d);
+
+    this.setState({loading: false})
  }
 
   render() {
-    return <svg ref={node => this.node = node}>
-    </svg>
+    return <svg ref={node => this.node = node} />
   }
 }
 
