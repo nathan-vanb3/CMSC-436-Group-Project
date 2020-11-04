@@ -27,13 +27,9 @@ class App extends React.Component {
     var newElement = (
       <div>
         <p>ID: {info['ID']}</p>
-        <br/>
         <p>SMILES: {info['SMILES']}</p>
-        <br/>
         <p>mib_vol: {info['mib_vol']}</p>
-        <br/>
         <p>LogP_Jchem: {info['LogP_Jchem']}</p>
-        <br/>
         <p>pKa_uncap: {info['pKa_uncap']}</p>
       </div>
     );
@@ -107,17 +103,11 @@ class VisPort extends React.Component {
 class InfoPort extends React.Component {
   render() {
     return (
-      <Pivot className='info'>
-        <PivotItem headerText='Properties'>
-          <Properties selected={this.props.selected} info={this.props.selectedElement}/>
-        </PivotItem>
-        <PivotItem headerText='Stucture'>
-          <Structure selected={this.props.selected} info={this.props.properties}/>
-        </PivotItem>
-        <PivotItem headerText='Additional'>
-          <Additional/>
-        </PivotItem>
-      </Pivot>
+      <div className='info'>
+         <Structure selected={this.props.selected} info={this.props.properties}/>
+        <Properties selected={this.props.selected} info={this.props.selectedElement}/>
+      </div>
+          
     );
   };
 };
@@ -132,21 +122,13 @@ class Structure extends React.Component {
   }
 
   render() {
-    return(
-      <div id='structure' className='infoItem' style={{boxShadow: DefaultEffects.elevation4}}>
-        {this.props.selected ? <iframe className='structureViewer' src={'https://embed.molview.org/v1/?mode=balls&smiles=' + this.props.info['SMILES']}></iframe> : <p>No Species Selected.</p>}
-      </div>
-    );
+    return this.props.selected ? <iframe className='structureViewer' src={'https://embed.molview.org/v1/?mode=balls&smiles=' + this.props.info['SMILES']}></iframe> : <p>No Species Selected.</p>
   }
 }
 
 class Properties extends React.Component {
   render() {
-    return(
-      <div id='properties' className='infoItem' style={{boxShadow: DefaultEffects.elevation4}}>
-        {this.props.selected ? this.props.info : <p>No Species Selected.</p>}
-      </div>
-    );
+    return this.props.info
   };
 }
 

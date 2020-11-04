@@ -10,10 +10,7 @@ class Vis1 extends Component {
   render() {
     return(
       <div className='visPort'>
-        <div className='visDisplay' style={{boxShadow: DefaultEffects.elevation4}}>
-          <Visualization data={fixed_data} size={[1000,800]} updateSelected={this.props.updateSelected}/>
-        </div>
-        <Vis1Options/>
+          <Visualization data={fixed_data} size={[1000,1000]} updateSelected={this.props.updateSelected}/>
       </div>
     );
   };
