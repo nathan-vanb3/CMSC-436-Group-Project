@@ -1,12 +1,8 @@
 import React from 'react';
 import './App.css';
-import {loadTheme, Pivot, PivotItem, DefaultButton, Panel,
-        PanelType, DefaultEffects} from '@fluentui/react';
-import {useBoolean} from '@uifabric/react-hooks';
-import FileManagement from './FileManagement.js';
+import {Pivot, PivotItem} from '@fluentui/react';
 import Vis1 from './Vis1.js';
 import Vis2 from './Vis2.js';
-import Vis3 from './Vis3.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -50,17 +46,14 @@ class App extends React.Component {
   }
 
   render() {
-    return (
+    return this.state.showInfoPort ?
       <div className='masterContainer'>
         <VisPort updateSelected={this.updateSelected} fill={!this.state.showInfoPort} toggleInfoPort={this.toggleInfoPort}/>
-
-        {this.state.showInfoPort 
-          ? <InfoPort properties={this.state.selectedProperties} selectedElement={this.state.selectedElement} selected={this.state.selected}/>
-          : null
-        }
-        
+        <InfoPort properties={this.state.selectedProperties} selectedElement={this.state.selectedElement} selected={this.state.selected}/>
+      </div> :
+      <div className='masterContainer'>
+        <VisPort updateSelected={this.updateSelected} fill={!this.state.showInfoPort} toggleInfoPort={this.toggleInfoPort}/>
       </div>
-    );
   };
 }
 
@@ -92,9 +85,6 @@ class VisPort extends React.Component {
         <PivotItem headerText='SPLOM'>
           <Vis1 updateSelected={this.props.updateSelected}/>
         </PivotItem>
-        <PivotItem headerText='Clustering'>
-          <Vis3/>
-        </PivotItem>
       </Pivot>
     );
   };
@@ -104,10 +94,9 @@ class InfoPort extends React.Component {
   render() {
     return (
       <div className='info'>
-         <Structure selected={this.props.selected} info={this.props.properties}/>
+        <Structure selected={this.props.selected} info={this.props.properties}/>
         <Properties selected={this.props.selected} info={this.props.selectedElement}/>
-      </div>
-          
+      </div>   
     );
   };
 };
@@ -130,14 +119,6 @@ class Properties extends React.Component {
   render() {
     return this.props.info
   };
-}
-
-function Additional() {
-  return(
-    <div id='additional' className='infoItem' style={{boxShadow: DefaultEffects.elevation4}}>
-      <p>Additional info will go here</p>
-    </div>
-  );
 }
 
 export default App;

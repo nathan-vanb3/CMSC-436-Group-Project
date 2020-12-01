@@ -1,18 +1,66 @@
 import React from 'react';
-import FileManagement from './FileManagement.js';
-import {DefaultEffects, ScrollablePane} from '@fluentui/react';
-import ReactFlexyTable from 'react-flexy-table';
-import data from './data.json';
-import 'react-flexy-table/dist/index.css';
+import axios from 'axios';
+import MaterialTable from 'material-table';
+import Plotly from 'plotly.js';
 
-function Vis2() {
-  return(
-    <div className='visPort'>
-      <ScrollablePane style={{boxShadow: DefaultEffects.elevation4}}>
-        <ReactFlexyTable data={data} pageSize={10} pageSizeOptions={[10, 15, 20, 50, 100, 200, 500, 1000]} sortable filterable globalSearch/>
-      </ScrollablePane>
-    </div>
-  );
+class Vis2 extends React.Component{
+  constructor(props) {
+    super(props);
+
+    this.state = {data: []};
+
+    Plotly.d3.csv('https://raw.githubusercontent.com/nathan-vanb3/CMSC-436-Group-Project/master/compiled_data.csv', (err, rows) => {
+      rows.forEach(function(row) {
+        row['ID'] = +row['ID'];
+        row['mib_vol'] = +row['mib_vol'];
+        row['LogP_Jchem'] = +row['LogP_Jchem'];
+        row['pKa_uncap'] = +row['pKa_uncap'];
+      });
+
+      console.log(rows)
+      this.setState({data: rows});
+    });
+  }
+
+  columns = [
+    {field: 'ID', title: 'ID', sorting: false, filtering: false},
+    {field: 'SMILES', title: 'SMILES'},
+    {field: 'mib_vol', title: 'mib_vol', searchable: false, type: 'numeric'},
+    {field: 'LogP_Jchem', title: 'LogP_Jchem', searchable: false, type: 'numeric'},
+    {field: 'pKa_uncap', title: 'pKa_uncap', searchable: false, type: 'numeric'},
+    {field: 'Type', title: 'Type', searchable: false, sorting: false, lookup: {Abiotic: 'Abiotic', Computational: 'Computational', Coded: 'Coded'}}
+  ]
+
+  render() {
+    return(
+      <div classtitle='visPort'>
+        <MaterialTable
+          detailPanel = {
+            row => {
+              return(
+                <iframe width='100%' height='500' src={'https://embed.molview.org/v1/?mode=balls&smiles=' + row['SMILES']}></iframe>
+              )
+            }
+          }
+          columns={this.columns}
+          data={this.state.data}
+          options={{
+            filtering: true,
+            exportButton: true,
+            paging: true,
+            pageSizeOptions: [5, 8, 10, 15, 20, 1000],
+            pageSize: 8
+          }}
+          localization = {{
+            toolbar: {
+              searchPlaceholder: 'ID or SMILES'
+            }
+          }}
+          title = 'Amino Acid Data Table'
+        />
+      </div>
+    );
+  }
 }
 
 export default Vis2;
