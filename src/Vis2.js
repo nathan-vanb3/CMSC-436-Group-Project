@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import MaterialTable from 'material-table';
 import Plotly from 'plotly.js';
 
