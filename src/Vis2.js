@@ -24,9 +24,9 @@ class Vis2 extends React.Component{
   columns = [
     {field: 'ID', title: 'ID', sorting: false, filtering: false},
     {field: 'SMILES', title: 'SMILES'},
-    {field: 'mib_vol', title: 'mib_vol', searchable: false, type: 'numeric'},
-    {field: 'LogP_Jchem', title: 'LogP_Jchem', searchable: false, type: 'numeric'},
-    {field: 'pKa_uncap', title: 'pKa_uncap', searchable: false, type: 'numeric'},
+    {field: 'mib_vol', title: 'mib_vol', searchable: false, type: 'numeric', customFilterAndSearch: (term, rowData) => Math.floor(term) == Math.floor(rowData.mib_vol)},
+    {field: 'LogP_Jchem', title: 'LogP_Jchem', searchable: false, type: 'numeric', customFilterAndSearch: (term, rowData) => Math.floor(term) == Math.floor(rowData.LogP_Jchem)},
+    {field: 'pKa_uncap', title: 'pKa_uncap', searchable: false, type: 'numeric', customFilterAndSearch: (term, rowData) => Math.floor(term) == Math.floor(rowData.pKa_uncap)},
     {field: 'Type', title: 'Type', searchable: false, sorting: false, lookup: {Abiotic: 'Abiotic', Computational: 'Computational', Coded: 'Coded'}}
   ]
 
