@@ -37,7 +37,7 @@ class Vis2 extends React.Component{
           detailPanel = {
             row => {
               return(
-                <iframe width='100%' height='500' src={'https://embed.molview.org/v1/?mode=balls&smiles=' + row['SMILES']}></iframe>
+                <iframe title='SMILES 3D Model Detail Card' width='100%' height='500' src={'https://embed.molview.org/v1/?mode=balls&smiles=' + row['SMILES']}></iframe>
               )
             }
           }
